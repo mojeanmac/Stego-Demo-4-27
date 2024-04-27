@@ -50,7 +50,6 @@ def decoder():
   binary = ""  # string to store extracted bits
   with Image.open(src) as img:
     width, height = img.size
-    byte = []
     for y in range(height):  # loop row by row
       for x in range(width):  # for each pixel in the row
         pixel = list(img.getpixel(
@@ -58,11 +57,12 @@ def decoder():
         for n in range(3):
           binary += str(pixel[n] & 1)  # extract the LSB from each R, G, B
 
+  byte = []
   message = ""
-  for i in range(0, len(binary),
-                 8):  # loop through the binary list in steps of 8
+  for i in range(0, len(binary), 8):  # loop through binary list in steps of 8
     byte = binary[i:i + 8]  # get the next 8 bits
-    message += chr(int(byte, 2))  # convert byte to a character, add to message
+    c = chr(int(byte, 2))  # convert byte to a character
+    message += c  # add to message
 
   print(message)
 
